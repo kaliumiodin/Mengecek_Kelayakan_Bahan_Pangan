@@ -83,103 +83,102 @@ st.info(
     "dan mendapatkan evaluasi serta rekomendasi yang sesuai."
 )
 
-st.set_page_config(
-    page_title="SIKAPAN - Kelayakan Bahan Pangan",
-    page_icon="🥗",
-    layout="wide"
-)
-
-# ================= SIDEBAR =================
-st.sidebar.title("🔎 Navigasi")
 menu = st.sidebar.radio(
-    "Pilih halaman:",
+    "📂 Menu",
     ["🏠 Beranda", "🐟 Kesegaran Ikan"]
 )
 
-st.sidebar.markdown("---")
-st.sidebar.info(
-    "SIKAPAN membantu mengevaluasi kelayakan "
-    "bahan pangan dan memberikan rekomendasi pengolahan."
+st.set_page_config(
+    page_title="SIKAPAN - Kelayakan Bahan Pangan",
+    page_icon="🐟",
+    layout="wide"
 )
 
-# ================= BERANDA =================
-if menu == "🏠 Beranda":
-    st.markdown(
-        """
-        <div style="
-            background: linear-gradient(90deg, #2e7d32, #66bb6a);
-            padding:25px;
-            border-radius:12px;
-            text-align:center;
-        ">
-            <h1 style="color:white;">🥗 SIKAPAN</h1>
-            <p style="color:rgba(255,255,255,0.9); font-size:18px;">
-            Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
+# ===== SIDEBAR =====
+menu = st.sidebar.radio(
+    "📂 Menu",
+    ["🏠 Beranda", "🐟 Kesegaran Ikan"]
+)
+
+# =========================
+# ===== HALAMAN IKAN =====
+# =========================
+if menu == "🐟 Kesegaran Ikan":
+
+    st.markdown("## 🐟 Evaluasi Kesegaran Ikan")
+
+    jenis_ikan = st.selectbox(
+        "Jenis Ikan",
+        ["Ikan Laut", "Ikan Tawar"]
     )
 
-    st.write("")
-
-    st.markdown(
-        """
-        <div style="
-            background-color: rgba(102,187,106,0.12);
-            padding:22px;
-            border-radius:12px;
-            color: inherit;
-        ">
-        <p>
-        Selamat datang di <b>SIKAPAN</b>. Aplikasi ini dirancang untuk membantu
-        pengguna dalam menentukan kelayakan bahan pangan sebelum diolah atau dikonsumsi.
-        </p>
-        <p>
-        Gunakan menu di sebelah kiri untuk memilih jenis bahan pangan
-        dan memperoleh evaluasi kesegaran serta rekomendasi pengolahan.
-        </p>
-        </div>
-        """,
-        unsafe_allow_html=True
+    warna_insang = st.selectbox(
+        "Warna Insang",
+        ["Merah cerah", "Merah pucat", "Coklat keabu-abuan"]
     )
 
-# ================= HALAMAN IKAN =================
-elif menu == "🐟 Kesegaran Ikan":
-    st.header("🐟 Evaluasi Kesegaran Ikan")
-
-    st.markdown(
-        """
-        <div style="
-            background-color: rgba(33,150,243,0.08);
-            padding:20px;
-            border-radius:12px;
-            color: inherit;
-        ">
-        Halaman ini digunakan untuk mengevaluasi kesegaran ikan
-        berdasarkan parameter organoleptik dan lama penyimpanan.
-        </div>
-        """,
-        unsafe_allow_html=True
+    bau = st.selectbox(
+        "Bau",
+        ["Segar", "Agak amis", "Busuk"]
     )
 
-    st.write("")
+    tekstur = st.selectbox(
+        "Tekstur Daging",
+        ["Kenyal", "Agak lembek", "Lembek"]
+    )
 
-    # ===== INPUT PARAMETER =====
-    col1, col2 = st.columns(2)
+    mata = st.selectbox(
+        "Kondisi Mata",
+        ["Jernih & menonjol", "Agak keruh", "Keruh & cekung"]
+    )
 
-    with col1:
-        warna = st.selectbox(
-            "Kondisi Warna",
-            ["Cerah / Mengkilap", "Agak Pucat", "Kusam / Gelap"]
+    hari = st.number_input(
+        "Lama Penyimpanan (hari)",
+        min_value=0,
+        step=1
+    )
+
+    if st.button("🔍 Evaluasi Kelayakan"):
+
+        indikator_buruk = 0
+
+        if warna_insang != "Merah cerah":
+            indikator_buruk += 1
+        if bau != "Segar":
+            indikator_buruk += 1
+        if tekstur != "Kenyal":
+            indikator_buruk += 1
+        if mata != "Jernih & menonjol":
+            indikator_buruk += 1
+
+        batas_hari = 2 if jenis_ikan == "Ikan Laut" else 3
+
+        if bau == "Busuk" or tekstur == "Lembek" or hari > batas_hari:
+            st.error("❌ Ikan TIDAK LAYAK digunakan")
+
+            st.markdown("### ⚠️ Peringatan Keamanan")
+            st.write(
+                "Ikan berpotensi mengandung mikroorganisme berbahaya "
+                "dan tidak aman untuk dikonsumsi."
+            )
+
+        elif indikator_buruk >= 2:
+            st.warning("⚠️ Kualitas ikan menurun")
+
+        else:
+            st.success("✅ Ikan MASIH LAYAK digunakan")
+
+        # ===== REKOMENDASI =====
+        st.markdown("### 🧊 Panduan Penyimpanan")
+        st.write(
+            "- Simpan pada suhu 0–4 °C\n"
+            "- Gunakan wadah tertutup\n"
+            "- Hindari kontak langsung dengan air"
         )
 
-        bau = st.selectbox(
-            "Kondisi Bau",
-            ["Segar", "Agak Asam", "Busuk"]
+        st.markdown("### 🍳 Rekomendasi Pengolahan")
+        st.write(
+            "- Olah dengan pemanasan sempurna\n"
+            "- Cocok untuk dikukus, direbus, atau digoreng\n"
+            "- Hindari konsumsi mentah jika kualitas menurun"
         )
-
-    with col2:
-        tekstur = st.selectbox(
-            "Kondisi Tekstur",
-            ["Kenyal", "Agak Lembek", "Lembek / Berlendir"]()
