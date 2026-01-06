@@ -100,11 +100,10 @@ st.sidebar.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# ===== SIDEBAR =====
 menu = st.sidebar.radio(
     "📂 Menu",
-    ["🏠 Beranda", "🐟 Kesegaran Ikan"]
+    ["🏠 Beranda", "🐟 Kesegaran Ikan", "🥩 Kesegaran Daging"],
+    key="menu_utama"
 )
 
 # =========================
@@ -188,4 +187,92 @@ if menu == "🐟 Kesegaran Ikan":
             "- Olah dengan pemanasan sempurna\n"
             "- Cocok untuk dikukus, direbus, atau digoreng\n"
             "- Hindari konsumsi mentah jika kualitas menurun"
+        )
+# ======================
+# HALAMAN KESEGARAN DAGING
+# ======================
+elif menu == "🥩 Kesegaran Daging":
+
+    st.markdown("## 🥩 Evaluasi Kesegaran Daging")
+
+    jenis_daging = st.selectbox(
+        "Jenis Daging",
+        ["Daging Merah (Sapi/Kambing)", "Daging Putih (Ayam)"],
+        key="jenis_daging"
+    )
+
+    warna = st.selectbox(
+        "Warna Daging",
+        ["Merah cerah / Putih segar", "Pucat", "Kecoklatan/Abu-abu"],
+        key="warna_daging"
+    )
+
+    bau = st.selectbox(
+        "Bau",
+        ["Segar", "Agak asam", "Busuk"],
+        key="bau_daging"
+    )
+
+    tekstur = st.selectbox(
+        "Tekstur",
+        ["Kenyal", "Agak lembek", "Lembek"],
+        key="tekstur_daging"
+    )
+
+    lendir = st.selectbox(
+        "Permukaan Daging",
+        ["Tidak berlendir", "Sedikit berlendir", "Berlendir"],
+        key="lendir_daging"
+    )
+
+    hari = st.number_input(
+        "Lama Penyimpanan (hari)",
+        min_value=0,
+        step=1,
+        key="hari_daging"
+    )
+
+    if st.button("🔍 Evaluasi Kelayakan Daging", key="eval_daging"):
+
+        indikator = 0
+        if warna != "Merah cerah / Putih segar":
+            indikator += 1
+        if bau != "Segar":
+            indikator += 1
+        if tekstur != "Kenyal":
+            indikator += 1
+        if lendir != "Tidak berlendir":
+            indikator += 1
+
+        batas = 2 if jenis_daging == "Daging Putih (Ayam)" else 3
+
+        if bau == "Busuk" or lendir == "Berlendir" or hari > batas:
+            st.error("❌ Daging TIDAK LAYAK digunakan")
+
+            st.markdown("### ⚠️ Peringatan Keamanan")
+            st.write(
+                "Daging berisiko mengandung bakteri patogen "
+                "seperti Salmonella atau E. coli."
+            )
+
+        elif indikator >= 2:
+            st.warning("⚠️ Kualitas daging menurun")
+
+        else:
+            st.success("✅ Daging MASIH LAYAK digunakan")
+
+        # ===== PENYIMPANAN =====
+        st.markdown("### 🧊 Panduan Penyimpanan")
+        st.write(
+            "- Simpan pada suhu 0–4 °C\n"
+            "- Bekukan jika tidak segera digunakan\n"
+            "- Gunakan wadah tertutup rapat"
+        )
+
+        # ===== PENGOLAHAN =====
+        st.markdown("### 🍳 Rekomendasi Pengolahan")
+        st.write(
+            "- Masak hingga suhu internal matang\n"
+            "- Hindari konsumsi setengah matang\n"
+            "- Cocok diolah dengan perebusan, pengukusan, atau pemanggangan"
         )
