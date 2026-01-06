@@ -1,19 +1,25 @@
-# :earth_americas: GDP dashboard template
+# FishFresh Advisor 🐟
 
-A simple Streamlit app showing the GDP of different countries in the world.
+Aplikasi web untuk menilai kelayakan ikan dan memberikan saran pengolahan terbaik.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
+## 🌟 Fitur Utama
+1. **Analisis Kelayakan Ikan** - Parameter berbeda untuk setiap jenis ikan
+2. **Saran Pengolahan** - Metode terbaik untuk menjaga nutrisi
+3. **Tampilan Interaktif** - Grafik dan visualisasi menarik
+4. **Responsif** - Dapat diakses di berbagai perangkat
 
-### How to run it on your own machine
+## 🚀 Cara Menjalankan
 
-1. Install the requirements
+### Lokal
+```bash
+# Clone repository
+git clone https://github.com/username/fish-processing-advice.git
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+# Masuk direktori
+cd fish-processing-advice
 
-2. Run the app
+# Install dependencies
+pip install -r requirements.txt
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+# Jalankan aplikasi
+streamlit run app.py
