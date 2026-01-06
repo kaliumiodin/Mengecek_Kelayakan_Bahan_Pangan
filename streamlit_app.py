@@ -6,14 +6,21 @@ st.set_page_config(
     layout="wide"
 )
 
-# ===== HEADER WARNA =====
+# ===== HEADER =====
 st.markdown(
     """
-    <div style="background-color:#2e7d32; padding:20px; border-radius:10px">
-        <h1 style="color:white; text-align:center;">🥗 SIKAPAN</h1>
-        <h4 style="color:#e8f5e9; text-align:center;">
-        Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan
-        </h4>
+    <div style="
+        background: linear-gradient(90deg, #2e7d32, #66bb6a);
+        padding:25px;
+        border-radius:12px;
+        text-align:center;
+    ">
+        <h1 style="margin-bottom:5px; color:white;">
+            🥗 SIKAPAN
+        </h1>
+        <p style="font-size:18px; color:rgba(255,255,255,0.9);">
+            Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan
+        </p>
     </div>
     """,
     unsafe_allow_html=True
@@ -24,13 +31,21 @@ st.write("")
 # ===== KONTEN UTAMA =====
 st.markdown(
     """
-    <div style="background-color:#f1f8e9; padding:20px; border-radius:10px">
-    <p style="font-size:16px;">
-    Selamat datang di <b>SIKAPAN</b>, sebuah aplikasi berbasis web yang dirancang
-    untuk membantu pengguna dalam menentukan kelayakan bahan pangan sebelum digunakan.
-    Aplikasi ini menyediakan panduan mengenai kondisi bahan pangan, cara penyimpanan,
-    serta rekomendasi pengolahan agar mutu dan kandungan gizi tetap terjaga.
-    </p>
+    <div style="
+        background-color: rgba(102, 187, 106, 0.12);
+        padding:22px;
+        border-radius:12px;
+        color: inherit;
+        font-size:16px;
+    ">
+        <p>
+        Selamat datang di <b>SIKAPAN</b>, sebuah aplikasi berbasis web yang dirancang
+        untuk membantu pengguna dalam menentukan kelayakan bahan pangan sebelum digunakan.
+        </p>
+        <p>
+        Aplikasi ini memberikan panduan kondisi bahan pangan, teknik penyimpanan yang tepat,
+        serta rekomendasi pengolahan agar mutu dan kandungan gizi tetap terjaga.
+        </p>
     </div>
     """,
     unsafe_allow_html=True
@@ -41,14 +56,20 @@ st.write("")
 # ===== TUJUAN =====
 st.markdown(
     """
-    <div style="background-color:#ffffff; padding:20px; border-left:6px solid #66bb6a">
-    <h3>🎯 Tujuan Pengembangan Aplikasi</h3>
-    <ul>
-        <li>Memudahkan pengguna mengevaluasi kelayakan bahan pangan</li>
-        <li>Memberikan panduan penyimpanan yang tepat</li>
-        <li>Menyediakan rekomendasi pengolahan yang aman</li>
-        <li>Mengurangi risiko penggunaan bahan pangan tidak layak</li>
-    </ul>
+    <div style="
+        background-color: rgba(0,0,0,0.02);
+        padding:22px;
+        border-left:6px solid #66bb6a;
+        border-radius:10px;
+        color: inherit;
+    ">
+        <h3>🎯 Tujuan Aplikasi</h3>
+        <ul>
+            <li>Memudahkan evaluasi kelayakan bahan pangan</li>
+            <li>Memberikan panduan penyimpanan yang benar</li>
+            <li>Menyarankan metode pengolahan yang aman</li>
+            <li>Mengurangi risiko konsumsi bahan pangan tidak layak</li>
+        </ul>
     </div>
     """,
     unsafe_allow_html=True
@@ -58,6 +79,6 @@ st.write("")
 
 # ===== INFO =====
 st.info(
-    "👉 Gunakan menu navigasi untuk memilih jenis bahan pangan "
+    "👉 Gunakan menu navigasi di sidebar untuk memilih jenis bahan pangan "
     "dan mendapatkan evaluasi serta rekomendasi yang sesuai."
 )
