@@ -83,17 +83,6 @@ st.info(
     "dan mendapatkan evaluasi serta rekomendasi yang sesuai."
 )
 
-menu = st.sidebar.radio(
-    "📂 Menu",
-    ["🏠 Beranda", "🐟 Kesegaran Ikan"]
-)
-
-st.set_page_config(
-    page_title="SIKAPAN - Kelayakan Bahan Pangan",
-    page_icon="🐟",
-    layout="wide"
-)
-
 # ===== SIDEBAR =====
 menu = st.sidebar.radio(
     "📂 Menu",
