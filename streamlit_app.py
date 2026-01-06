@@ -1,111 +1,77 @@
 import streamlit as st
-import pandas as pd
 
-# Konfigurasi halaman
 st.set_page_config(
-    page_title="FishFresh Advisor",
+    page_title="Kelayakan & Pengolahan Ikan",
     page_icon="🐟",
-    layout="wide"
+    layout="centered"
 )
 
-# Data ikan (versi sederhana)
-FISH_DATABASE = {
-    "Salmon": {
-        "parameters": ["Kesegaran", "Warna", "Tekstur", "Bau", "Mata"],
-        "min_score": 35
-    },
-    "Tuna": {
-        "parameters": ["Kesegaran", "Warna", "Tekstur", "Bau", "Insang"],
-        "min_score": 32
-    },
-    "Kakap Merah": {
-        "parameters": ["Kesegaran", "Sisik", "Mata", "Insang", "Daging"],
-        "min_score": 28
+st.markdown(
+    "<h1 style='text-align:center;'>🐟 Kelayakan & Rekomendasi Pengolahan Ikan</h1>",
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    "<p style='text-align:center;color:gray;'>Aplikasi berbasis parameter organoleptik & jenis ikan</p>",
+    unsafe_allow_html=True
+)
+
+st.markdown("---")
+
+with st.form("form_ikan"):
+    jenis_ikan = st.selectbox(
+        "🐠 Jenis Ikan",
+        ["Ikan Berlemak", "Ikan Daging Putih", "Ikan Air Tawar", "Ikan Kecil"]
+    )
+
+    warna = st.selectbox("🎨 Warna", ["Normal", "Pucat", "Gelap"])
+    bau = st.selectbox("👃 Bau", ["Segar", "Agak Asam", "Busuk"])
+    tekstur = st.selectbox("✋ Tekstur", ["Normal", "Lembek", "Berlendir"])
+    hari = st.number_input("📦 Lama Penyimpanan (hari)", 0, 14, 0)
+
+    submit = st.form_submit_button("🔍 Evaluasi")
+
+# ======================
+# LOGIKA SISTEM
+# ======================
+if submit:
+    indikator = 0
+
+    if warna != "Normal":
+        indikator += 1
+    if bau != "Segar":
+        indikator += 1
+    if tekstur != "Normal":
+        indikator += 1
+
+    batas_simpan = {
+        "Ikan Berlemak": 3,
+        "Ikan Daging Putih": 5,
+        "Ikan Air Tawar": 4,
+        "Ikan Kecil": 2
     }
-}
 
-def main():
-    st.title("🐟 FishFresh Advisor")
-    st.markdown("### Aplikasi Analisis Kelayakan Ikan")
-    
-    # Pilih ikan
-    selected_fish = st.selectbox("Pilih Jenis Ikan:", list(FISH_DATABASE.keys()))
-    
     st.markdown("---")
-    st.subheader(f"Parameter untuk Ikan {selected_fish}")
-    
-    # Input nilai
-    scores = {}
-    fish_data = FISH_DATABASE[selected_fish]
-    
-    for param in fish_data["parameters"]:
-        if param == "Kesegaran":
-            scores[param] = st.slider(f"{param} (1-10)", 1, 10, 5)
-        else:
-            scores[param] = st.select_slider(
-                f"{param}",
-                options=["Buruk", "Cukup", "Baik", "Sangat Baik"],
-                value="Baik"
-            )
-    
-    # Tombol analisis
-    if st.button("Analisis Kelayakan", type="primary"):
-        # Hitung total skor
-        total_score = 0
-        for param, value in scores.items():
-            if param == "Kesegaran":
-                total_score += value * 3
-            elif value == "Sangat Baik":
-                total_score += 10
-            elif value == "Baik":
-                total_score += 7
-            elif value == "Cukup":
-                total_score += 4
-            else:
-                total_score += 1
-        
-        st.markdown("---")
-        st.subheader("Hasil Analisis")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Total Skor", total_score)
-            st.metric("Batas Minimum", fish_data["min_score"])
-        
-        with col2:
-            if total_score >= fish_data["min_score"]:
-                st.success("✅ LAYAK DIOLAH")
-                st.balloons()
-            else:
-                st.error("❌ TIDAK LAYAK")
-        
-        # Rekomendasi
-        st.markdown("### 💡 Rekomendasi Pengolahan")
-        
-        if total_score >= fish_data["min_score"]:
-            if total_score > 40:
-                st.info("""
-                **Rekomendasi:** Dikukus atau Dipanggang
-                **Alasan:** Mempertahankan 90% nutrisi, cocok untuk ikan segar
-                """)
-            elif total_score > 30:
-                st.info("""
-                **Rekomendasi:** Dibakar atau Pepes
-                **Alasan:** Bumbu rempah meningkatkan cita rasa
-                """)
-            else:
-                st.info("""
-                **Rekomendasi:** Digoreng dengan bumbu kuat
-                **Alasan:** Menetralkan bau dan memastikan kematangan
-                """)
-        else:
-            st.warning("""
-            **Tidak disarankan untuk diolah.** 
-            Jika tetap ingin mengolah:
-            1. Bersihkan dengan air mengalir
-            2. Rendam dalam jeruk nipis 30 menit
-            3. Masak dengan suhu tinggi
-            """)
+    st.subheader("📊 Hasil Analisis")
 
-if __name__ == "__main__":
-    main()
+    if bau == "Busuk" or tekstur == "Berlendir" or hari > batas_simpan[jenis_ikan]:
+        st.error("❌ IKAN TIDAK LAYAK DIOlah")
+        st.write("🔎 Terjadi indikasi pembusukan.")
+        st.write("❌ Tidak disarankan untuk dikonsumsi.")
+
+    elif indikator >= 2:
+        st.warning("⚠️ IKAN KURANG LAYAK")
+        st.write("🍳 Disarankan diolah dengan **pemanasan sempurna**.")
+        st.write("👉 Rekomendasi: Digoreng atau dimasak berkuah.")
+
+    else:
+        st.success("✅ IKAN LAYAK DIOlah")
+        st.write("🥗 Kandungan gizi masih optimal.")
+        st.write("👉 Rekomendasi terbaik:")
+        st.write("- Kukus")
+        st.write("- Pepes")
+        st.write("- Tumis cepat")
+
+    st.markdown("---")
+    st.caption("Aplikasi ini bersifat edukatif dan tidak menggantikan uji laboratorium.")
+
