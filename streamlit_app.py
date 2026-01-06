@@ -1,97 +1,63 @@
 import streamlit as st
 
-# ======================
-# KONFIGURASI HALAMAN
-# ======================
 st.set_page_config(
-    page_title="Kelayakan Ikan",
-    page_icon="🐟",
-    layout="centered"
+    page_title="SIKAPAN - Kelayakan Bahan Pangan",
+    page_icon="🥗",
+    layout="wide"
 )
 
-st.title("🐟 Aplikasi Kelayakan & Pengolahan Ikan")
-st.caption("Berbasis parameter organoleptik dan jenis ikan")
+# ===== HEADER WARNA =====
+st.markdown(
+    """
+    <div style="background-color:#2e7d32; padding:20px; border-radius:10px">
+        <h1 style="color:white; text-align:center;">🥗 SIKAPAN</h1>
+        <h4 style="color:#e8f5e9; text-align:center;">
+        Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan
+        </h4>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-st.markdown("---")
+st.write("")
 
-# ======================
-# FORM INPUT
-# ======================
-with st.form("form_kelayakan"):
-    jenis_ikan = st.selectbox(
-        "🐠 Jenis Ikan",
-        (
-            "Ikan Berlemak",
-            "Ikan Daging Putih",
-            "Ikan Air Tawar",
-            "Ikan Kecil"
-        )
-    )
+# ===== KONTEN UTAMA =====
+st.markdown(
+    """
+    <div style="background-color:#f1f8e9; padding:20px; border-radius:10px">
+    <p style="font-size:16px;">
+    Selamat datang di <b>SIKAPAN</b>, sebuah aplikasi berbasis web yang dirancang
+    untuk membantu pengguna dalam menentukan kelayakan bahan pangan sebelum digunakan.
+    Aplikasi ini menyediakan panduan mengenai kondisi bahan pangan, cara penyimpanan,
+    serta rekomendasi pengolahan agar mutu dan kandungan gizi tetap terjaga.
+    </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    warna = st.selectbox(
-        "🎨 Warna Ikan",
-        ("Normal", "Pucat", "Gelap")
-    )
+st.write("")
 
-    bau = st.selectbox(
-        "👃 Bau Ikan",
-        ("Segar", "Agak Asam", "Busuk")
-    )
+# ===== TUJUAN =====
+st.markdown(
+    """
+    <div style="background-color:#ffffff; padding:20px; border-left:6px solid #66bb6a">
+    <h3>🎯 Tujuan Pengembangan Aplikasi</h3>
+    <ul>
+        <li>Memudahkan pengguna mengevaluasi kelayakan bahan pangan</li>
+        <li>Memberikan panduan penyimpanan yang tepat</li>
+        <li>Menyediakan rekomendasi pengolahan yang aman</li>
+        <li>Mengurangi risiko penggunaan bahan pangan tidak layak</li>
+    </ul>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    tekstur = st.selectbox(
-        "✋ Tekstur Ikan",
-        ("Normal", "Lembek", "Berlendir")
-    )
+st.write("")
 
-    hari = st.number_input(
-        "📦 Lama Penyimpanan (hari)",
-        min_value=0,
-        max_value=14,
-        step=1
-    )
-
-    submit = st.form_submit_button("🔍 Evaluasi Kelayakan")
-
-# ======================
-# LOGIKA PENILAIAN
-# ======================
-if submit:
-    indikator = 0
-
-    if warna != "Normal":
-        indikator += 1
-    if bau != "Segar":
-        indikator += 1
-    if tekstur != "Normal":
-        indikator += 1
-
-    batas_simpan = {
-        "Ikan Berlemak": 3,
-        "Ikan Daging Putih": 5,
-        "Ikan Air Tawar": 4,
-        "Ikan Kecil": 2
-    }
-
-    st.markdown("---")
-    st.subheader("📊 Hasil Evaluasi")
-
-    if bau == "Busuk" or tekstur == "Berlendir" or hari > batas_simpan[jenis_ikan]:
-        st.error("❌ IKAN TIDAK LAYAK DIOlah")
-        st.write("Terjadi indikasi pembusukan.")
-        st.write("❌ Tidak disarankan untuk dikonsumsi.")
-
-    elif indikator >= 2:
-        st.warning("⚠️ IKAN KURANG LAYAK")
-        st.write("Disarankan diolah dengan pemanasan sempurna.")
-        st.write("🍳 Rekomendasi: digoreng atau dimasak berkuah.")
-
-    else:
-        st.success("✅ IKAN LAYAK DIOlah")
-        st.write("Kandungan gizi masih relatif baik.")
-        st.write("🥗 Rekomendasi pengolahan:")
-        st.write("- Kukus")
-        st.write("- Pepes")
-        st.write("- Tumis cepat")
-
-    st.markdown("---")
-    st.caption("Aplikasi bersifat edukatif dan tidak menggantikan uji laboratorium.")
+# ===== INFO =====
+st.info(
+    "👉 Gunakan menu navigasi untuk memilih jenis bahan pangan "
+    "dan mendapatkan evaluasi serta rekomendasi yang sesuai."
+)
