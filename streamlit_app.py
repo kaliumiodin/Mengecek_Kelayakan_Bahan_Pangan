@@ -82,6 +82,24 @@ st.info(
     "👉 Gunakan menu navigasi di sidebar untuk memilih jenis bahan pangan "
     "dan mendapatkan evaluasi serta rekomendasi yang sesuai."
 )
+# ======================
+# SIDEBAR LOGO ATAS
+# ======================
+st.sidebar.markdown(
+    """
+    <div style="
+        text-align:center;
+        padding:10px 0 15px 0;
+    ">
+        <h2>🥗 SIKAPAN</h2>
+        <p style="font-size:22px;">
+            🍳 🐟 🥩 🥬 🍎
+        </p>
+        <hr>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # ===== SIDEBAR =====
 menu = st.sidebar.radio(
