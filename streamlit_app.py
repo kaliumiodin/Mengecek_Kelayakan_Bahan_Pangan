@@ -41,7 +41,7 @@ st.markdown(
         color:white;
     ">
         <h1>🥗 SIKAPAN</h1>
-        <p>Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan</p>
+        <p>Sistem Informasi Kelayakan Bahan Pangan - Kelompok 1 NTP</p>
     </div>
     """,
     unsafe_allow_html=True
@@ -56,7 +56,7 @@ if menu == "🏠 Beranda":
 
     st.write(
         """
-        **SIKAPAN (Sistem Informasi Kelayakan dan Pengolahan Bahan Pangan)**  
+        **SIKAPAN (Sistem Informasi Kelayakan Bahan Pangan)**  
         adalah aplikasi berbasis web yang membantu pengguna menilai
         **kelayakan konsumsi bahan pangan** secara sederhana dan praktis
         berdasarkan:
